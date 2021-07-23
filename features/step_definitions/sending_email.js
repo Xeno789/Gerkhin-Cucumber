@@ -1,7 +1,7 @@
 const assert = require('assert');
 const { When, Then,setDefaultTimeout} = require('@cucumber/cucumber');
 setDefaultTimeout(30 * 1000);
-
+var subject = ""
 When('I try to send an email.', async function () {
   // Click on Write email button
   const writeEmailSelector = '[role="region"] > div > div:nth-child(2) > div > div  > button'
@@ -16,7 +16,7 @@ When('I try to send an email.', async function () {
 
   // Type in subject
   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  var subject = ""
+  subject = ""
   for (var i=0; i < 5;i++){
       subject += possible.charAt(Math.floor(Math.random() * possible.length));
   }
@@ -42,7 +42,6 @@ Then('It should appear in sent emails.', async function () {
     const sentEmailsSelector = '[data-convid] > div > div > div > div > div:nth-child(2) > div > div'
     await this.page.waitForSelector(sentEmailsSelector);
     const potentialSubject = await this.page.$eval((sentEmailsSelector), div => div.textContent);
-    
     assert.strictEqual(potentialSubject,subject);
 
     // Click on the dump folder button and confirm it
