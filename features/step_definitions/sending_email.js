@@ -1,7 +1,9 @@
 const assert = require('assert');
 const { When, Then,setDefaultTimeout} = require('@cucumber/cucumber');
+
 setDefaultTimeout(30 * 1000);
 var subject = ""
+
 When('I try to send an email.', async function () {
   // Click on Write email button
   const writeEmailSelector = '[role="region"] > div > div:nth-child(2) > div > div  > button'
