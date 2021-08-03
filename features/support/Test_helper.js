@@ -15,7 +15,7 @@ Before(async function () {
   });
   this.browser = browser;
   this.page = page;
-  
+
   this.emailAddress = process.env.EMAIL;
   this.nonExistantEmail = process.env.NONEXISTANTEMAIL;
   this.targetEmail = process.env.TARGET_EMAIL;
@@ -33,7 +33,7 @@ After(function () {
   return this.browser.close();
 })
 
-async function login(email, password, page, isSuccessfull = true) {
+async function login(email, password, page, expectedSuccess = true) {
   await page.goto('https://outlook.live.com/owa/');
 
   // Click on login button
@@ -62,7 +62,7 @@ async function login(email, password, page, isSuccessfull = true) {
   await secondLoginButton.click();
 
   // Time by Time Outlook asks if you want to stay signed in, if thats the case, this clicks no.
-  if (isSuccessfull) {
+  if (expectedSuccess) {
     try {
       const doNotStaySignedInButtonXpath = '/html/body/div/form/div/div/div[1]/div[2]/div/div[2]/div/div[3]/div[2]/div/div/div[1]/input'
       const doNotStaySignedInButton = await page.waitForXPath(doNotStaySignedInButtonXpath);
